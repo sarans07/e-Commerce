@@ -4,7 +4,6 @@ import 'package:demo_api/TextStyle.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:http/http.dart'as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 class productDescription extends StatefulWidget {
@@ -47,9 +46,7 @@ class _productDescriptionState extends State<productDescription> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: badges.Badge(
-                badgeContent: Text("0"),
-                child: Icon(Icons.add_shopping_cart,size: 30,)),
+            child: Icon(Icons.add_shopping_cart,size: 30,),
           )
         ],
       ),
@@ -85,12 +82,12 @@ class _productDescriptionState extends State<productDescription> {
                           ),
                         ),
                         SizedBox(height: 30),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Text('Ratings : ${snapshot.data!.rating!.rate.toString()}- (${snapshot.data!.rating!.count.toString()})',
-                            style: pagestyle,
-                          ),
-                        ),
+                        // Align(
+                        //   alignment: Alignment.topRight,
+                        //   child: Text('Ratings : ${snapshot.data!.rating!.rate.toString()}- (${snapshot.data!.rating!.count.toString()})',
+                        //     style: pagestyle,
+                        //   ),
+                        // ),
                         Divider(
                           height: MediaQuery.of(context).size.height*0.05,
                           thickness: 2,
@@ -139,7 +136,7 @@ class _productDescriptionState extends State<productDescription> {
                               style: headings
                             ),
                             Text(snapshot.data!.price.toString(),
-                                style: headings
+                                style: TextStyle(color: Colors.blue,fontSize: 24,fontWeight: FontWeight.bold)
                             ),
                           ],
                         ),

@@ -4,7 +4,6 @@ import 'package:demo_api/TextStyle.dart';
 import 'package:demo_api/productDescription.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart'as http;
-import 'package:badges/badges.dart' as badges;
 
 
 import 'Model/productClass.dart';
@@ -30,7 +29,6 @@ class _productState extends State<product> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _items = fetchProductDetails();
   }
@@ -47,9 +45,7 @@ class _productState extends State<product> {
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: badges.Badge(
-              badgeContent: Text("0"),
-                child: Icon(Icons.add_shopping_cart,size: 30,)),
+            child: Icon(Icons.add_shopping_cart,size: 30,),
           )
         ],
       ),
@@ -59,11 +55,15 @@ class _productState extends State<product> {
             color: Colors.yellow[100],
             child: Column(
               children: [
+
                 FutureBuilder(
-                    future: _items,
+                    future: fetchProductDetails(),
                     builder: (context, snapshot){
                       if(snapshot.hasData){
+                        //print(snapshot);
+                        print('sdvdfsv');
                         List<Product> list = snapshot.data!;
+                        print(list);
                         return ListView.builder(
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
@@ -90,7 +90,8 @@ class _productState extends State<product> {
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(10.0),
-                                          child: Container(
+                                          child:
+                                          Container(
                                             height: MediaQuery.of(context).size.height*0.2,
                                             width: MediaQuery.of(context).size.width*0.3,
                                             decoration: BoxDecoration(
@@ -117,21 +118,21 @@ class _productState extends State<product> {
                                                       style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
                                                     ),SizedBox(width: 5),
                                                     Text(list[index].price.toString(),
-                                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+                                                      style: TextStyle(color: Colors.blue,fontSize: 24,fontWeight: FontWeight.bold)
                                                     ),
                                                   ],
                                                 ),
-                                                Row(
-                                                  children: [
-                                                    Text("Ratings ${list[index].rating!.rate.toString()}",
-                                                      style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold,fontSize: 15),
-                                                    ),
-                                                    SizedBox(width: 5),
-                                                    Text('(${list[index].rating!.count.toString()}) reviews',
-                                                        style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold,fontSize: 15),
-                                                    ),
-                                                  ],
-                                                ),
+                                                // Row(
+                                                //   children: [
+                                                //     Text("Ratings ${list[index].rating!.rate.toString()}",
+                                                //       style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold,fontSize: 15),
+                                                //     ),
+                                                //     SizedBox(width: 5),
+                                                //     Text('(${list[index].rating!.count.toString()}) reviews',
+                                                //         style: TextStyle(color: Colors.yellow,fontWeight: FontWeight.bold,fontSize: 15),
+                                                //     ),
+                                                //   ],
+                                                // ),
                                                 Align(
                                                   alignment: Alignment.topLeft,
                                                   child: Text('Product Id - ${list[index].id.toString()}',
@@ -154,6 +155,9 @@ class _productState extends State<product> {
                               );
                             }
                         );
+                      }else if(snapshot.hasError){
+
+                        return Text(snapshot.error.toString());
                       }
                       return CircularProgressIndicator();
                     }
